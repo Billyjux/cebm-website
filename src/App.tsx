@@ -270,29 +270,33 @@ function NavBar({ page, setPage, theme, onToggleTheme }: { page: Page; setPage: 
     { id: "announcements", label: "Annonces" },
     { id: "contact", label: "Contact" },
   ];
+  const isActive = (id: Page) => page === id || (id === "events" && page === "event-detail");
   return (
-    <nav style={{ background: "#fff", borderBottom: "3px solid #CE1126", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
+    <nav style={{ background: "var(--c-nav-bg)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderBottom: "1px solid var(--c-nav-border)", position: "sticky", top: 0, zIndex: 100, boxShadow: "var(--c-nav-shadow)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        {/* LOGO remplace les trois traits + texte CEBM */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => setPage("home")}>
           <CebmLogo height={44} />
         </div>
-        <div style={{ display: "flex", gap: 6, alignItems: "center" }} className="nav-desktop">
-          {navLinks.map(l => (
-            <button key={l.id} onClick={() => setPage(l.id)} style={{ background: page === l.id ? "#CE1126" : "none", color: page === l.id ? "#fff" : "#333", border: "none", padding: "7px 14px", borderRadius: 6, cursor: "pointer", fontSize: 14, fontWeight: page === l.id ? 600 : 400, transition: "all 0.2s" }}>{l.label}</button>
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }} className="nav-desktop">
+          {navLinks.map(l => l.id === "contact" ? (
+            <button key={l.id} onClick={() => setPage(l.id)} className="cebm-nav__cta">{l.label}</button>
+          ) : (
+            <button key={l.id} onClick={() => setPage(l.id)} className={`cebm-nav__link${isActive(l.id) ? " is-active" : ""}`}>{l.label}</button>
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "none" }}>
-            <div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333" }} />
+          <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn cebm-nav__burger" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={menuOpen} style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "none", color: "var(--c-nav-link)" }}>
+            <div style={{ width: 22, height: 2, background: "currentColor", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "currentColor", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "currentColor" }} />
           </button>
         </div>
       </div>
       {menuOpen && (
-        <div style={{ background: "#fff", padding: "1rem 1.5rem", borderTop: "1px solid #eee", display: "flex", flexDirection: "column", gap: 4 }}>
-          {navLinks.map(l => (
-            <button key={l.id} onClick={() => { setPage(l.id); setMenuOpen(false); }} style={{ background: page === l.id ? "#CE1126" : "none", color: page === l.id ? "#fff" : "#333", border: "none", padding: "10px 14px", borderRadius: 6, cursor: "pointer", fontSize: 15, textAlign: "left" }}>{l.label}</button>
+        <div style={{ background: "var(--c-nav-menu-bg)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", padding: "1rem 1.5rem", borderTop: "1px solid var(--c-nav-menu-border)", display: "flex", flexDirection: "column", gap: 4 }}>
+          {navLinks.map(l => l.id === "contact" ? (
+            <button key={l.id} onClick={() => { setPage(l.id); setMenuOpen(false); }} className="cebm-nav__cta cebm-nav__cta--mobile">{l.label}</button>
+          ) : (
+            <button key={l.id} onClick={() => { setPage(l.id); setMenuOpen(false); }} className={`cebm-nav__link cebm-nav__link--mobile${isActive(l.id) ? " is-active" : ""}`}>{l.label}</button>
           ))}
         </div>
       )}
@@ -300,6 +304,16 @@ function NavBar({ page, setPage, theme, onToggleTheme }: { page: Page; setPage: 
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap');
         * { font-family: 'DM Sans', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
         html, body, #root { height: 100%; width: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+        .cebm-nav__link { position: relative; background: none; color: var(--c-nav-link); border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: color 0.2s, background 0.2s; }
+        .cebm-nav__link:hover { color: #CE1126; background: var(--c-nav-hover); }
+        .cebm-nav__link.is-active { color: #CE1126; font-weight: 600; }
+        .cebm-nav__link.is-active::after { content: ""; position: absolute; left: 50%; bottom: 3px; transform: translateX(-50%); width: 18px; height: 2px; border-radius: 2px; background: #FCD116; }
+        .cebm-nav__cta { background: #CE1126; color: #fff; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 14px rgba(206,17,38,0.22); transition: background 0.2s, transform 0.2s; }
+        .cebm-nav__cta:hover { background: #a50e1f; transform: translateY(-1px); }
+        .cebm-nav__link--mobile { width: 100%; text-align: left; padding: 11px 14px; font-size: 15px; }
+        .cebm-nav__link--mobile.is-active { background: var(--c-nav-active-soft); }
+        .cebm-nav__link--mobile.is-active::after { left: 14px; transform: none; bottom: 8px; }
+        .cebm-nav__cta--mobile { width: 100%; text-align: center; margin-top: 6px; padding: 11px 14px; font-size: 15px; }
         @media(max-width:768px) { .nav-desktop { display: none !important; } .nav-mobile-btn { display: block !important; } }
       `}</style>
     </nav>
