@@ -8,7 +8,7 @@ parallel with the previous one (good for splitting work between the two of you).
 
 ## Phase 0 — Clean foundations (no visible behavior change)
 
-- [ ] **0.1 Repo cleanup + tooling**
+- [x] **0.1 Repo cleanup + tooling**
   - Delete `build-errors*.txt`, `src/App.css`, unused `src/assets/{react,vite}.svg`, `hero.png`, `logocebem.png` (after confirming they are unused), template `README.md`.
   - Add scripts `typecheck` and `test` (vitest), `.env.example`, `.nvmrc` (Node 22).
   - New `README.md` (French): what the site is, how to run it, link to `docs/`.
