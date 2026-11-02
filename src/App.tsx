@@ -976,6 +976,7 @@ function AdminLogin({ onLogin, onBack, theme, onToggleTheme }: { onLogin: () => 
       </div>
 
       <aside className="cebm-login__aside" aria-hidden="true">
+        <div className="cebm-login__aside-logo" />
         <div className="cebm-login__aside-top">
           <span className="cebm-login__eyebrow">Communauté · Maroc</span>
           <h2>Au service des étudiants burundais au Maroc.</h2>
@@ -1108,6 +1109,12 @@ function AdminLogin({ onLogin, onBack, theme, onToggleTheme }: { onLogin: () => 
         .cebm-login__aside::after {
           content: ""; position: absolute; inset: 0; z-index: -1; opacity: .5;
           background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.055) 0 1px, transparent 1px 20px);
+        }
+        .cebm-login__aside-logo {
+          position: absolute; inset: 0; z-index: -2; pointer-events: none;
+          background-image: url('/cebm-logo.jpg');
+          background-size: contain; background-position: center; background-repeat: no-repeat;
+          opacity: .14; filter: grayscale(1) invert(1); mix-blend-mode: screen;
         }
         .cebm-login__eyebrow {
           display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
