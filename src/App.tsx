@@ -157,34 +157,34 @@ function ImageUploader({ images, onChange, label = "Photos", max = MAX_PHOTOS }:
 
   return (
     <div>
-      <label style={{ display: "block", fontSize: 13, color: "#555", marginBottom: 5, fontWeight: 500 }}>{label} <span style={{ color: "#999", fontWeight: 400 }}>({images.length}/{max})</span></label>
+      <label style={{ display: "block", fontSize: 13, color: "var(--c-body)", marginBottom: 5, fontWeight: 500 }}>{label} <span style={{ color: "var(--c-faint-2)", fontWeight: 400 }}>({images.length}/{max})</span></label>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: 10 }}>
         {images.map((src, i) => (
-          <div key={i} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid #ddd", aspectRatio: "4 / 3", background: "#f3f4f6" }}>
+          <div key={i} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid var(--c-border-strong)", aspectRatio: "4 / 3", background: "var(--c-surface-3)" }}>
             <img src={src} alt={`Photo ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             <button type="button" onClick={() => removeAt(i)} title="Supprimer la photo" style={{ position: "absolute", top: 4, right: 4, width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.65)", color: "#fff", cursor: "pointer", fontSize: 14, lineHeight: 1 }}>×</button>
           </div>
         ))}
         {images.length < max && (
-          <button type="button" onClick={() => inputRef.current?.click()} disabled={busy} style={{ aspectRatio: "4 / 3", borderRadius: 8, border: "2px dashed #ccc", background: "#fafafa", color: "#666", cursor: busy ? "wait" : "pointer", fontSize: 13, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4 }}>
+          <button type="button" onClick={() => inputRef.current?.click()} disabled={busy} style={{ aspectRatio: "4 / 3", borderRadius: 8, border: "2px dashed var(--c-border-dashed)", background: "var(--c-surface-4)", color: "var(--c-muted)", cursor: busy ? "wait" : "pointer", fontSize: 13, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4 }}>
             <span style={{ fontSize: 22, lineHeight: 1 }}>{busy ? "…" : "+"}</span>
             {busy ? "Chargement" : "Ajouter"}
           </button>
         )}
       </div>
       <input ref={inputRef} type="file" accept="image/*" multiple onChange={e => { void handleFiles(e.target.files); }} style={{ display: "none" }} />
-      {error && <p style={{ color: "#ef4444", fontSize: 12, margin: "6px 0 0" }}>{error}</p>}
+      {error && <p style={{ color: "var(--c-error-text)", fontSize: 12, margin: "6px 0 0" }}>{error}</p>}
     </div>
   );
 }
 
 function StatusBadge({ status }: { status: ScholarshipStatus }) {
   const styles: Record<ScholarshipStatus, { bg: string; color: string; }> = {
-    "Actif": { bg: "#d1fae5", color: "#065f46" },
-    "En attente": { bg: "#fef3c7", color: "#92400e" },
-    "Suspendu": { bg: "#fee2e2", color: "#991b1b" },
+    "Actif": { bg: "var(--c-success-bg)", color: "var(--c-success-text)" },
+    "En attente": { bg: "var(--c-warning-bg)", color: "var(--c-warning-text)" },
+    "Suspendu": { bg: "var(--c-danger-bg)", color: "var(--c-danger-text)" },
   };
-  const s = styles[status] || { bg: "#f3f4f6", color: "#374151" };
+  const s = styles[status] || { bg: "var(--c-neutral-badge-bg)", color: "var(--c-neutral-badge-text)" };
   return <span style={{ background: s.bg, color: s.color, padding: "3px 10px", borderRadius: 20, fontSize: 12, fontWeight: 600 }}>{status}</span>;
 }
  
@@ -259,7 +259,6 @@ function PublicLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
-
 
 function NavBar({ page, setPage, theme, onToggleTheme }: { page: Page; setPage: (page: Page) => void; theme: Theme; onToggleTheme: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -343,7 +342,7 @@ function HomePage({ events, announcements, setPage, setSelectedEvent }: { events
         </div>
       </div>
  
-      <div style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "24px 1.5rem" }}>
+      <div style={{ background: "var(--c-section-glass)", backdropFilter: "blur(4px)", borderBottom: "1px solid var(--c-border)", padding: "24px 1.5rem" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 24, textAlign: "center" }}>
           {([
             { n: events.length, l: "Événements", page: "events" as Page },
@@ -351,30 +350,30 @@ function HomePage({ events, announcements, setPage, setSelectedEvent }: { events
             { n: announcements.length, l: "Annonces", page: "announcements" as Page },
             { n: "5+", l: "Années actives", page: "home" as Page },
           ] as Array<{ n: number | string; l: string; page: Page }>).map((s, i) => (
-            <div key={i}><p style={{ fontSize: 32, fontWeight: 700, color: i % 2 === 0 ? FLAG_COLORS.red : FLAG_COLORS.green, margin: 0 }}>{s.n}</p><p style={{ fontSize: 13, color: "#666", margin: "4px 0 0" }}>{s.l}</p></div>
+            <div key={i}><p style={{ fontSize: 32, fontWeight: 700, color: i % 2 === 0 ? FLAG_COLORS.red : FLAG_COLORS.green, margin: 0 }}>{s.n}</p><p style={{ fontSize: 13, color: "var(--c-muted)", margin: "4px 0 0" }}>{s.l}</p></div>
           ))}
         </div>
       </div>
  
-      <div style={{ padding: "64px 1.5rem", background: "#fff" }}>
+      <div style={{ padding: "64px 1.5rem", background: "var(--c-section-glass)", backdropFilter: "blur(4px)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}>
             <div>
               <p style={{ color: FLAG_COLORS.red, fontWeight: 600, fontSize: 13, textTransform: "uppercase", letterSpacing: 2, margin: "0 0 8px" }}>Agenda</p>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", margin: 0, color: "#1a1a1a" }}>Prochains événements</h2>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", margin: 0, color: "var(--c-text)" }}>Prochains événements</h2>
             </div>
-            <button onClick={() => setPage("events")} style={{ background: "none", border: "1px solid #ddd", padding: "9px 18px", borderRadius: 7, cursor: "pointer", fontSize: 14, color: "#444" }}>Voir tout →</button>
+            <button onClick={() => setPage("events")} style={{ background: "none", border: "1px solid var(--c-border-strong)", padding: "9px 18px", borderRadius: 7, cursor: "pointer", fontSize: 14, color: "var(--c-body-2)" }}>Voir tout →</button>
           </div>
-          {upcomingEvents.length === 0 ? <p style={{ color: "#888", textAlign: "center", padding: 40 }}>Aucun événement à venir</p> : (
+          {upcomingEvents.length === 0 ? <p style={{ color: "var(--c-muted-2)", textAlign: "center", padding: 40 }}>Aucun événement à venir</p> : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
               {upcomingEvents.map(e => (
-                <div key={e.id} onClick={() => { setSelectedEvent(e); setPage("event-detail"); }} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 12, overflow: "hidden", cursor: "pointer", transition: "box-shadow 0.2s", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
+                <div key={e.id} onClick={() => { setSelectedEvent(e); setPage("event-detail"); }} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 12, overflow: "hidden", cursor: "pointer", transition: "box-shadow 0.2s", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
                   <div style={{ height: 8, background: CITY_COLORS[e.city] || "#888" }} />
                   {coverImage(e) && <img src={coverImage(e) || ""} alt={e.title} style={{ width: "100%", height: 170, objectFit: "cover", display: "block" }} />}
                   <div style={{ padding: "20px 20px 16px" }}>
                     <span style={{ background: CITY_COLORS[e.city] || "#888", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20, display: "inline-block", marginBottom: 10 }}>{e.city}</span>
-                    <h3 style={{ margin: "0 0 10px", fontSize: 17, fontWeight: 600, color: "#1a1a1a" }}>{e.title}</h3>
-                    <div style={{ color: "#666", fontSize: 13, display: "flex", flexDirection: "column", gap: 5 }}>
+                    <h3 style={{ margin: "0 0 10px", fontSize: 17, fontWeight: 600, color: "var(--c-text)" }}>{e.title}</h3>
+                    <div style={{ color: "var(--c-muted)", fontSize: 13, display: "flex", flexDirection: "column", gap: 5 }}>
                       <span>📅 {new Date(e.date).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</span>
                       <span>🕐 {e.time} • 📍 {e.location}</span>
                     </div>
@@ -386,16 +385,16 @@ function HomePage({ events, announcements, setPage, setSelectedEvent }: { events
         </div>
       </div>
  
-      <div style={{ padding: "64px 1.5rem", background: "#fff" }}>
+      <div style={{ padding: "64px 1.5rem", background: "var(--c-section-glass)", backdropFilter: "blur(4px)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
           {([
             { title: "Galerie & archives", desc: "Revivez les moments forts de la communauté à travers nos photos, événements et archives.", btn: "Voir la galerie", page: "gallery", color: "#b45309" },
             { title: "Dernières annonces", desc: "Restez informé des actualités, opportunités de stages et informations administratives importantes.", btn: "Lire les annonces", page: "announcements", color: FLAG_COLORS.red },
             { title: "Nous contacter", desc: "Besoin d'aide ? Contactez les responsables de la CEBM via WhatsApp ou email.", btn: "Contacter", page: "contact", color: "#1e40af" },
           ] as Array<{ title: string; desc: string; btn: string; page: Page; color: string }>).map(c => (
-            <div key={c.title} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 14, padding: 28, borderTop: `4px solid ${c.color}` }}>
-              <h3 style={{ margin: "0 0 10px", fontSize: 18, fontWeight: 600, color: "#1a1a1a" }}>{c.title}</h3>
-              <p style={{ color: "#666", lineHeight: 1.7, margin: "0 0 20px", fontSize: 14 }}>{c.desc}</p>
+            <div key={c.title} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 14, padding: 28, borderTop: `4px solid ${c.color}` }}>
+              <h3 style={{ margin: "0 0 10px", fontSize: 18, fontWeight: 600, color: "var(--c-text)" }}>{c.title}</h3>
+              <p style={{ color: "var(--c-muted)", lineHeight: 1.7, margin: "0 0 20px", fontSize: 14 }}>{c.desc}</p>
               <button onClick={() => setPage(c.page)} style={{ background: c.color, color: "#fff", border: "none", padding: "10px 20px", borderRadius: 7, cursor: "pointer", fontSize: 14, fontWeight: 600 }}>{c.btn}</button>
             </div>
           ))}
@@ -428,34 +427,34 @@ function EventsPage({ events, setPage, setSelectedEvent }: { events: EventItem[]
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 1.5rem" }}>
       <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "#1a1a1a" }}>Événements</h1>
-        <p style={{ color: "#666", margin: "0 0 24px" }}>Tous les événements organisés par la CEBM à travers le Maroc</p>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "var(--c-text)" }}>Événements</h1>
+        <p style={{ color: "var(--c-muted)", margin: "0 0 24px" }}>Tous les événements organisés par la CEBM à travers le Maroc</p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {cityOptions.map(c => (
-            <button key={c} onClick={() => setFilterCity(c)} style={{ background: filterCity === c ? (c === "Toutes" ? "#333" : CITY_COLORS[c]) : "#fff", color: filterCity === c ? "#fff" : "#555", border: "1px solid #ddd", padding: "7px 16px", borderRadius: 20, cursor: "pointer", fontSize: 13, fontWeight: filterCity === c ? 600 : 400 }}>{c}</button>
+            <button key={c} onClick={() => setFilterCity(c)} style={{ background: filterCity === c ? (c === "Toutes" ? "var(--c-strong)" : CITY_COLORS[c]) : "var(--c-surface)", color: filterCity === c ? "var(--c-on-strong)" : "var(--c-body)", border: "1px solid var(--c-border-strong)", padding: "7px 16px", borderRadius: 20, cursor: "pointer", fontSize: 13, fontWeight: filterCity === c ? 600 : 400 }}>{c}</button>
           ))}
         </div>
       </div>
-      {(Object.keys(grouped).length === 0) ? <p style={{ color: "#888", textAlign: "center", padding: 60 }}>Aucun événement trouvé</p> :
+      {(Object.keys(grouped).length === 0) ? <p style={{ color: "var(--c-muted-2)", textAlign: "center", padding: 60 }}>Aucun événement trouvé</p> :
         (Object.entries(grouped) as Array<[City, EventItem[]]>).map(([city, cityEvents]) => (
           <div key={city} style={{ marginBottom: 48 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <div style={{ width: 16, height: 16, borderRadius: "50%", background: CITY_COLORS[city] || "#888" }} />
-              <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#1a1a1a" }}>{city}</h2>
-              <span style={{ color: "#888", fontSize: 14 }}>{cityEvents.length} événement{cityEvents.length > 1 ? "s" : ""}</span>
+              <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "var(--c-text)" }}>{city}</h2>
+              <span style={{ color: "var(--c-muted-2)", fontSize: 14 }}>{cityEvents.length} événement{cityEvents.length > 1 ? "s" : ""}</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
               {cityEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(e => (
-                <div key={e.id} onClick={() => { setSelectedEvent(e); setPage("event-detail"); }} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 12, overflow: "hidden", cursor: "pointer", borderLeft: `4px solid ${CITY_COLORS[city] || "#888"}` }}>
+                <div key={e.id} onClick={() => { setSelectedEvent(e); setPage("event-detail"); }} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 12, overflow: "hidden", cursor: "pointer", borderLeft: `4px solid ${CITY_COLORS[city] || "#888"}` }}>
                   {coverImage(e) && <img src={coverImage(e) || ""} alt={e.title} style={{ width: "100%", height: 160, objectFit: "cover", display: "block" }} />}
                   <div style={{ padding: "18px 20px" }}>
-                    <h3 style={{ margin: "0 0 10px", fontSize: 16, fontWeight: 600, color: "#1a1a1a" }}>{e.title}</h3>
-                    <div style={{ fontSize: 13, color: "#666", display: "flex", flexDirection: "column", gap: 5 }}>
+                    <h3 style={{ margin: "0 0 10px", fontSize: 16, fontWeight: 600, color: "var(--c-text)" }}>{e.title}</h3>
+                    <div style={{ fontSize: 13, color: "var(--c-muted)", display: "flex", flexDirection: "column", gap: 5 }}>
                       <span>📅 {new Date(e.date).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span>
                       <span>🕐 {e.time}</span>
                       <span>📍 {e.location}</span>
                     </div>
-                    <p style={{ margin: "12px 0 0", color: "#555", fontSize: 13, lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{e.description}</p>
+                    <p style={{ margin: "12px 0 0", color: "var(--c-body)", fontSize: 13, lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{e.description}</p>
                   </div>
                 </div>
               ))}
@@ -471,28 +470,28 @@ function EventDetailPage({ event, setPage }: { event: EventItem | null; setPage:
   if (!event) return <div style={{ textAlign: "center", padding: 80 }}><p>Événement introuvable</p><button onClick={() => setPage("events")}>← Retour</button></div>;
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 1.5rem" }}>
-      <button onClick={() => setPage("events")} style={{ background: "none", border: "none", color: "#666", cursor: "pointer", fontSize: 14, marginBottom: 20, padding: 0 }}>← Retour aux événements</button>
-      <div style={{ background: "#fff", border: "1px solid #eee", borderRadius: 16, overflow: "hidden" }}>
+      <button onClick={() => setPage("events")} style={{ background: "none", border: "none", color: "var(--c-muted)", cursor: "pointer", fontSize: 14, marginBottom: 20, padding: 0 }}>← Retour aux événements</button>
+      <div style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 16, overflow: "hidden" }}>
         <div style={{ height: 12, background: CITY_COLORS[event.city] || "#888" }} />
         {coverImage(event) && <img src={coverImage(event) || ""} alt={event.title} style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }} />}
         <div style={{ padding: "32px 36px" }}>
           <span style={{ background: CITY_COLORS[event.city] || "#888", color: "#fff", fontSize: 12, fontWeight: 600, padding: "4px 12px", borderRadius: 20 }}>{event.city}</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3vw, 2.2rem)", margin: "16px 0 24px", color: "#1a1a1a" }}>{event.title}</h1>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3vw, 2.2rem)", margin: "16px 0 24px", color: "var(--c-text)" }}>{event.title}</h1>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 28 }}>
             {[{ l: "Date", v: new Date(event.date).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) }, { l: "Heure", v: event.time }, { l: "Lieu", v: event.location }, { l: "Ville", v: event.city }].map(d => (
-              <div key={d.l} style={{ background: "#f8f9fa", borderRadius: 8, padding: "14px 18px" }}>
-                <p style={{ margin: 0, fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 }}>{d.l}</p>
-                <p style={{ margin: "4px 0 0", fontWeight: 500, color: "#1a1a1a", fontSize: 15 }}>{d.v}</p>
+              <div key={d.l} style={{ background: "var(--c-surface-2)", borderRadius: 8, padding: "14px 18px" }}>
+                <p style={{ margin: 0, fontSize: 11, color: "var(--c-muted-2)", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 }}>{d.l}</p>
+                <p style={{ margin: "4px 0 0", fontWeight: 500, color: "var(--c-text)", fontSize: 15 }}>{d.v}</p>
               </div>
             ))}
           </div>
-          <div style={{ borderTop: "1px solid #eee", paddingTop: 24 }}>
-            <h3 style={{ margin: "0 0 12px", color: "#1a1a1a" }}>Description</h3>
-            <p style={{ color: "#555", lineHeight: 1.8, margin: 0 }}>{event.description}</p>
+          <div style={{ borderTop: "1px solid var(--c-border)", paddingTop: 24 }}>
+            <h3 style={{ margin: "0 0 12px", color: "var(--c-text)" }}>Description</h3>
+            <p style={{ color: "var(--c-body)", lineHeight: 1.8, margin: 0 }}>{event.description}</p>
           </div>
           {eventImages(event).length > 1 && (
-            <div style={{ borderTop: "1px solid #eee", paddingTop: 24, marginTop: 24 }}>
-              <h3 style={{ margin: "0 0 12px", color: "#1a1a1a" }}>Photos</h3>
+            <div style={{ borderTop: "1px solid var(--c-border)", paddingTop: 24, marginTop: 24 }}>
+              <h3 style={{ margin: "0 0 12px", color: "var(--c-text)" }}>Photos</h3>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
                 {eventImages(event).slice(1).map((src, i) => (
                   <img key={i} src={src} alt={`${event.title} — photo ${i + 2}`} style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 8, display: "block" }} />
@@ -523,64 +522,64 @@ function ScholarshipsPage({ scholarships }: { scholarships: Scholarship[] }) {
   };
  
   const tabStyle = (active: boolean) => ({
-    flex: 1, padding: "12px 16px", background: active ? "#fff" : "transparent", border: "none",
+    flex: 1, padding: "12px 16px", background: active ? "var(--c-surface)" : "transparent", border: "none",
     borderBottom: active ? "2px solid #CE1126" : "2px solid transparent", cursor: "pointer",
-    fontSize: 14, fontWeight: active ? 600 : 400, color: active ? "#CE1126" : "#666", transition: "all 0.2s",
+    fontSize: 14, fontWeight: active ? 600 : 400, color: active ? "#CE1126" : "var(--c-muted)", transition: "all 0.2s",
   });
  
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 1.5rem" }}>
       <div style={{ textAlign: "center", marginBottom: 36 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 10px", color: "#1a1a1a" }}>Bourse AMCI</h1>
-        <p style={{ color: "#666", maxWidth: 520, margin: "0 auto", lineHeight: 1.7 }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 10px", color: "var(--c-text)" }}>Bourse AMCI</h1>
+        <p style={{ color: "var(--c-muted)", maxWidth: 520, margin: "0 auto", lineHeight: 1.7 }}>
           Vérifiez votre statut de bourse ou récupérez votre code bourse bimestriel via CESAM Centrale.
         </p>
       </div>
-      <div style={{ background: "#f8f9fa", borderRadius: 12, overflow: "hidden", border: "1px solid #eee", marginBottom: 28 }}>
-        <div style={{ display: "flex", borderBottom: "1px solid #eee", background: "#f8f9fa" }}>
+      <div style={{ background: "var(--c-surface-2)", borderRadius: 12, overflow: "hidden", border: "1px solid var(--c-border)", marginBottom: 28 }}>
+        <div style={{ display: "flex", borderBottom: "1px solid var(--c-border)", background: "var(--c-surface-2)" }}>
           <button style={tabStyle(activeTab === "statut")} onClick={() => setActiveTab("statut")}>🔍 Vérifier mon statut</button>
           <button style={tabStyle(activeTab === "code")} onClick={() => setActiveTab("code")}>🔑 Récupérer mon code bourse</button>
         </div>
         {activeTab === "statut" && (
           <div style={{ padding: 28 }}>
-            <p style={{ color: "#555", fontSize: 14, margin: "0 0 18px", lineHeight: 1.7 }}>
+            <p style={{ color: "var(--c-body)", fontSize: 14, margin: "0 0 18px", lineHeight: 1.7 }}>
               Entrez votre matricule AMCI pour vérifier votre statut de bourse dans notre base de données communautaire.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <input value={matricule} onChange={e => setMatricule(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearch()} placeholder="Ex: BUR2023001" style={{ flex: 1, padding: "13px 16px", border: "1.5px solid #ddd", borderRadius: 8, fontSize: 16, outline: "none", minWidth: 200 }} />
+              <input className="cebm-input" value={matricule} onChange={e => setMatricule(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearch()} placeholder="Ex: BUR2023001" style={{ flex: 1, padding: "13px 16px", borderRadius: 8, fontSize: 16, outline: "none", minWidth: 200 }} />
               <button onClick={handleSearch} style={{ background: FLAG_COLORS.green, color: "#fff", border: "none", padding: "13px 24px", borderRadius: 8, cursor: "pointer", fontSize: 15, fontWeight: 600 }}>Rechercher</button>
             </div>
-            <p style={{ color: "#aaa", fontSize: 12, marginTop: 10 }}>Exemples : BUR2023001, BUR2023045, BUR2024008</p>
+            <p style={{ color: "var(--c-faint)", fontSize: 12, marginTop: 10 }}>Exemples : BUR2023001, BUR2023045, BUR2024008</p>
             {searched && (
               <div style={{ marginTop: 24 }}>
                 {result ? (
-                  <div style={{ background: "#fff", border: "2px solid #18A558", borderRadius: 14, padding: "24px 28px" }}>
+                  <div style={{ background: "var(--c-surface)", border: "2px solid #18A558", borderRadius: 14, padding: "24px 28px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                       <div>
-                        <p style={{ color: "#888", fontSize: 12, margin: "0 0 4px", textTransform: "uppercase", letterSpacing: 1 }}>Étudiant trouvé</p>
-                        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#1a1a1a" }}>{result.name}</h2>
+                        <p style={{ color: "var(--c-muted-2)", fontSize: 12, margin: "0 0 4px", textTransform: "uppercase", letterSpacing: 1 }}>Étudiant trouvé</p>
+                        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "var(--c-text)" }}>{result.name}</h2>
                       </div>
                       <StatusBadge status={result.status} />
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14 }}>
                       {[{ l: "Matricule", v: result.matricule }, { l: "Statut", v: result.status }, { l: "Mois de paiement", v: result.month }, { l: "Montant", v: result.amount }].map(d => (
-                        <div key={d.l} style={{ background: "#f0fdf4", borderRadius: 8, padding: "12px 14px" }}>
-                          <p style={{ margin: 0, fontSize: 11, color: "#555", textTransform: "uppercase", letterSpacing: 1 }}>{d.l}</p>
-                          <p style={{ margin: "4px 0 0", fontWeight: 600, color: "#1a1a1a", fontSize: 15 }}>{d.v}</p>
+                        <div key={d.l} style={{ background: "var(--c-green-soft)", borderRadius: 8, padding: "12px 14px" }}>
+                          <p style={{ margin: 0, fontSize: 11, color: "var(--c-body)", textTransform: "uppercase", letterSpacing: 1 }}>{d.l}</p>
+                          <p style={{ margin: "4px 0 0", fontWeight: 600, color: "var(--c-text)", fontSize: 15 }}>{d.v}</p>
                         </div>
                       ))}
                     </div>
                     {result.status === "Actif" && (
-                      <div style={{ marginTop: 18, background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 10, padding: "12px 16px", fontSize: 13, color: "#92400e" }}>
+                      <div style={{ marginTop: 18, background: "var(--c-yellow-soft)", border: "1px solid var(--c-yellow-border)", borderRadius: 10, padding: "12px 16px", fontSize: 13, color: "var(--c-yellow-text)" }}>
                         💡 Votre bourse est active. Pour récupérer votre <strong>code bourse bimestriel</strong>, rendez-vous dans l'onglet <strong>Récupérer mon code bourse</strong>.
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div style={{ background: "#fff5f5", border: "1.5px solid #fecaca", borderRadius: 12, padding: 24, textAlign: "center" }}>
+                  <div style={{ background: "var(--c-error-soft)", border: "1.5px solid var(--c-error-border)", borderRadius: 12, padding: 24, textAlign: "center" }}>
                     <p style={{ fontSize: 24, margin: "0 0 8px" }}>🔍</p>
-                    <h3 style={{ color: "#991b1b", margin: "0 0 8px" }}>Matricule non trouvé</h3>
-                    <p style={{ color: "#7f1d1d", margin: 0, fontSize: 14 }}>Aucun dossier trouvé pour <strong>{matricule}</strong>. Vérifiez l'orthographe ou contactez la CEBM.</p>
+                    <h3 style={{ color: "var(--c-danger-text)", margin: "0 0 8px" }}>Matricule non trouvé</h3>
+                    <p style={{ color: "var(--c-danger-strong)", margin: 0, fontSize: 14 }}>Aucun dossier trouvé pour <strong>{matricule}</strong>. Vérifiez l'orthographe ou contactez la CEBM.</p>
                   </div>
                 )}
               </div>
@@ -590,7 +589,7 @@ function ScholarshipsPage({ scholarships }: { scholarships: Scholarship[] }) {
         {activeTab === "code" && (
           <div style={{ padding: 28 }}>
             <div style={{ marginBottom: 24 }}>
-              <p style={{ color: "#555", fontSize: 14, margin: "0 0 16px", lineHeight: 1.7 }}>
+              <p style={{ color: "var(--c-body)", fontSize: 14, margin: "0 0 16px", lineHeight: 1.7 }}>
                 Le <strong>code bourse AMCI</strong> est un code bimestriel que vous utilisez à la Banque Populaire pour percevoir votre bourse. Il est publié par <strong>CESAM Centrale</strong>.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -600,11 +599,11 @@ function ScholarshipsPage({ scholarships }: { scholarships: Scholarship[] }) {
                   { n: "3", t: "Saisissez votre matricule", s: "Entrez votre numéro dans le champ prévu sur la page de CESAM" },
                   { n: "4", t: "Notez votre code", s: "Le code change tous les deux mois — conservez-le en lieu sûr" },
                 ].map(step => (
-                  <div key={step.n} style={{ display: "flex", gap: 14, alignItems: "flex-start", background: "#f8f9fa", borderRadius: 10, padding: "12px 16px" }}>
+                  <div key={step.n} style={{ display: "flex", gap: 14, alignItems: "flex-start", background: "var(--c-surface-2)", borderRadius: 10, padding: "12px 16px" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#CE1126", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>{step.n}</div>
                     <div>
-                      <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#1a1a1a" }}>{step.t}</p>
-                      <p style={{ margin: "2px 0 0", fontSize: 13, color: "#666" }}>{step.s}</p>
+                      <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "var(--c-text)" }}>{step.t}</p>
+                      <p style={{ margin: "2px 0 0", fontSize: 13, color: "var(--c-muted)" }}>{step.s}</p>
                     </div>
                   </div>
                 ))}
@@ -615,20 +614,20 @@ function ScholarshipsPage({ scholarships }: { scholarships: Scholarship[] }) {
               Récupérer mon code bourse sur CESAM Centrale
               <span style={{ fontSize: 16, opacity: 0.8 }}>↗</span>
             </button>
-            <p style={{ textAlign: "center", color: "#aaa", fontSize: 12, marginTop: 10 }}>Vous serez redirigé vers <strong>cesamcentrale.org</strong> — site officiel de la CESAM</p>
-            <div style={{ marginTop: 20, background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 10, padding: "14px 18px", display: "flex", gap: 12, alignItems: "flex-start" }}>
+            <p style={{ textAlign: "center", color: "var(--c-faint)", fontSize: 12, marginTop: 10 }}>Vous serez redirigé vers <strong>cesamcentrale.org</strong> — site officiel de la CESAM</p>
+            <div style={{ marginTop: 20, background: "var(--c-yellow-soft)", border: "1px solid var(--c-yellow-border)", borderRadius: 10, padding: "14px 18px", display: "flex", gap: 12, alignItems: "flex-start" }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>⚠️</span>
               <div>
-                <p style={{ fontWeight: 600, margin: "0 0 4px", color: "#92400e", fontSize: 13 }}>Le code change tous les deux mois</p>
-                <p style={{ color: "#78350f", fontSize: 13, margin: 0, lineHeight: 1.6 }}>Si le code n'est pas encore disponible, patientez et réessayez ultérieurement. En cas de problème persistant, contactez votre responsable CEBM.</p>
+                <p style={{ fontWeight: 600, margin: "0 0 4px", color: "var(--c-yellow-text)", fontSize: 13 }}>Le code change tous les deux mois</p>
+                <p style={{ color: "var(--c-yellow-text)", fontSize: 13, margin: 0, lineHeight: 1.6 }}>Si le code n'est pas encore disponible, patientez et réessayez ultérieurement. En cas de problème persistant, contactez votre responsable CEBM.</p>
               </div>
             </div>
           </div>
         )}
       </div>
-      <div style={{ background: "#f0f9ff", border: "1px solid #bae6fd", borderRadius: 12, padding: 20 }}>
-        <h4 style={{ margin: "0 0 8px", color: "#0c4a6e" }}>ℹ️ Information</h4>
-        <p style={{ color: "#075985", fontSize: 14, margin: 0, lineHeight: 1.7 }}>
+            <div style={{ background: "var(--c-info-soft)", border: "1px solid var(--c-info-border)", borderRadius: 12, padding: 20 }}>
+              <h4 style={{ margin: "0 0 8px", color: "var(--c-info-heading)" }}>💡 Information</h4>
+              <p style={{ color: "var(--c-info-text)", fontSize: 14, margin: 0, lineHeight: 1.7 }}>
           Pour tout problème relatif à votre bourse AMCI, contactez le responsable bourses de la CEBM à <strong>bourses@cebm-maroc.org</strong> ou passez par la page <strong>Contact</strong>.
         </p>
       </div>
@@ -680,11 +679,11 @@ function GalleryPage({ gallery }: { gallery: GalleryItem[] }) {
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 1.5rem" }}>
       <div style={{ marginBottom: 28 }}>
         <p style={{ color: FLAG_COLORS.red, fontWeight: 600, fontSize: 13, textTransform: "uppercase", letterSpacing: 2, margin: "0 0 8px" }}>Archives CEBM</p>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "#1a1a1a" }}>Galerie</h1>
-        <p style={{ color: "#666", margin: 0, maxWidth: 620, lineHeight: 1.7 }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "var(--c-text)" }}>Galerie</h1>
+        <p style={{ color: "var(--c-muted)", margin: 0, maxWidth: 620, lineHeight: 1.7 }}>
           Revivez les moments forts de la communauté burundaise au Maroc : événements, culture, bourses et archives.
         </p>
-        <p style={{ color: "#999", margin: "8px 0 0", fontSize: 13 }}>{gallery.length} album{gallery.length !== 1 ? "s" : ""} · {totalPhotos} photo{totalPhotos !== 1 ? "s" : ""}</p>
+        <p style={{ color: "var(--c-faint-2)", margin: "8px 0 0", fontSize: 13 }}>{gallery.length} album{gallery.length !== 1 ? "s" : ""} · {totalPhotos} photo{totalPhotos !== 1 ? "s" : ""}</p>
       </div>
 
       <div style={{ marginBottom: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -692,7 +691,7 @@ function GalleryPage({ gallery }: { gallery: GalleryItem[] }) {
           const active = filterCategory === c;
           const color = c === "Toutes" ? "#333" : GALLERY_COLORS[c];
           return (
-            <button key={c} onClick={() => setFilterCategory(c)} style={{ background: active ? color : "#fff", color: active ? "#fff" : "#555", border: `1px solid ${active ? color : "#ddd"}`, padding: "7px 16px", borderRadius: 20, cursor: "pointer", fontSize: 13, fontWeight: active ? 600 : 400 }}>
+            <button key={c} onClick={() => setFilterCategory(c)} style={{ background: active ? color : "var(--c-surface)", color: active ? "#fff" : "var(--c-body)", border: `1px solid ${active ? color : "var(--c-border-strong)"}`, padding: "7px 16px", borderRadius: 20, cursor: "pointer", fontSize: 13, fontWeight: active ? 600 : 400 }}>
               {c}
             </button>
           );
@@ -700,11 +699,11 @@ function GalleryPage({ gallery }: { gallery: GalleryItem[] }) {
       </div>
 
       <div style={{ marginBottom: 28, display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-        <span style={{ fontSize: 12, color: "#999", marginRight: 4 }}>Ville :</span>
+        <span style={{ fontSize: 12, color: "var(--c-faint-2)", marginRight: 4 }}>Ville :</span>
         {(["Toutes", ...CITIES] as CityFilter[]).map(c => {
           const active = filterCity === c;
           return (
-            <button key={c} onClick={() => setFilterCity(c)} style={{ background: active ? "#1a1a1a" : "transparent", color: active ? "#fff" : "#666", border: `1px solid ${active ? "#1a1a1a" : "#e5e7eb"}`, padding: "4px 11px", borderRadius: 20, cursor: "pointer", fontSize: 12 }}>
+            <button key={c} onClick={() => setFilterCity(c)} style={{ background: active ? "var(--c-chip-strong)" : "transparent", color: active ? "var(--c-on-chip-strong)" : "var(--c-muted)", border: `1px solid ${active ? "var(--c-chip-strong)" : "var(--c-border-subtle)"}`, padding: "4px 11px", borderRadius: 20, cursor: "pointer", fontSize: 12 }}>
               {c}
             </button>
           );
@@ -712,28 +711,28 @@ function GalleryPage({ gallery }: { gallery: GalleryItem[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div style={{ background: "#fff", border: "1px dashed #ddd", borderRadius: 14, padding: "60px 20px", textAlign: "center" }}>
+        <div style={{ background: "var(--c-surface)", border: "1px dashed var(--c-border-strong)", borderRadius: 14, padding: "60px 20px", textAlign: "center" }}>
           <p style={{ fontSize: 28, margin: "0 0 8px" }}>🖼️</p>
-          <p style={{ color: "#888", margin: 0 }}>Aucun album ne correspond à ces filtres.</p>
+          <p style={{ color: "var(--c-muted-2)", margin: 0 }}>Aucun album ne correspond à ces filtres.</p>
         </div>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))", gap: 18 }}>
           {filtered.map(g => {
             const imgs = getImages(g.images);
             return (
-              <article key={g.id} className="gallery-card" style={{ background: "#fff", border: "1px solid #eee", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-                <button type="button" onClick={() => imgs.length > 0 && setLightbox({ item: g, index: 0 })} aria-label={imgs.length > 0 ? `Ouvrir ${g.title}` : g.title} style={{ position: "relative", display: "block", width: "100%", aspectRatio: "4 / 3", border: 0, padding: 0, background: "#f3f4f6", cursor: imgs.length > 0 ? "zoom-in" : "default", overflow: "hidden" }}>
+              <article key={g.id} className="gallery-card" style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
+                <button type="button" onClick={() => imgs.length > 0 && setLightbox({ item: g, index: 0 })} aria-label={imgs.length > 0 ? `Ouvrir ${g.title}` : g.title} style={{ position: "relative", display: "block", width: "100%", aspectRatio: "4 / 3", border: 0, padding: 0, background: "var(--c-surface-3)", cursor: imgs.length > 0 ? "zoom-in" : "default", overflow: "hidden" }}>
                   {imgs[0] ? <img src={imgs[0]} alt={g.title} className="gallery-card-img" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> : renderPlaceholder(g)}
                   <span style={{ position: "absolute", top: 10, left: 10, background: GALLERY_COLORS[g.category], color: "#fff", fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 20, letterSpacing: ".03em" }}>{g.category}</span>
                   {imgs.length > 1 && <span style={{ position: "absolute", right: 10, bottom: 10, background: "rgba(0,0,0,.65)", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 20 }}>{imgs.length} photos</span>}
                 </button>
                 <div style={{ padding: "16px 18px" }}>
-                  <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 600, color: "#1a1a1a" }}>{g.title}</h3>
-                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "#888", fontSize: 12 }}>
+                  <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 600, color: "var(--c-text)" }}>{g.title}</h3>
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "var(--c-muted-2)", fontSize: 12 }}>
                     <span>📅 {g.date ? new Date(g.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "Date à confirmer"}</span>
                     <span>📍 {g.city}</span>
                   </div>
-                  {g.description && <p style={{ margin: "10px 0 0", color: "#555", fontSize: 13, lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{g.description}</p>}
+                  {g.description && <p style={{ margin: "10px 0 0", color: "var(--c-body)", fontSize: 13, lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{g.description}</p>}
                 </div>
               </article>
             );
@@ -793,15 +792,15 @@ function AnnouncementsPage({ announcements }: { announcements: Announcement[] })
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 1.5rem" }}>
       <div style={{ marginBottom: 36 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "#1a1a1a" }}>Annonces</h1>
-        <p style={{ color: "#666" }}>Informations importantes publiées par la CEBM</p>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "var(--c-text)" }}>Annonces</h1>
+        <p style={{ color: "var(--c-muted)" }}>Informations importantes publiées par la CEBM</p>
       </div>
-      {announcements.length === 0 ? <p style={{ color: "#888", textAlign: "center", padding: 60 }}>Aucune annonce pour le moment</p> :
+      {announcements.length === 0 ? <p style={{ color: "var(--c-muted-2)", textAlign: "center", padding: 60 }}>Aucune annonce pour le moment</p> :
         announcements.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((a, i) => (
-          <div key={a.id} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 14, padding: "24px 28px", marginBottom: 20, borderLeft: `4px solid ${i % 2 === 0 ? FLAG_COLORS.green : FLAG_COLORS.red}` }}>
+          <div key={a.id} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 14, padding: "24px 28px", marginBottom: 20, borderLeft: `4px solid ${i % 2 === 0 ? FLAG_COLORS.green : FLAG_COLORS.red}` }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
-              <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600, color: "#1a1a1a" }}>{a.title}</h2>
-              <span style={{ color: "#888", fontSize: 13 }}>{new Date(a.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</span>
+              <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600, color: "var(--c-text)" }}>{a.title}</h2>
+              <span style={{ color: "var(--c-muted-2)", fontSize: 13 }}>{new Date(a.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</span>
             </div>
             {getImages(a.images).length > 0 && (
               <div style={{ display: "grid", gridTemplateColumns: getImages(a.images).length === 1 ? "1fr" : "repeat(auto-fill, minmax(180px, 1fr))", gap: 10, marginBottom: 16 }}>
@@ -810,7 +809,7 @@ function AnnouncementsPage({ announcements }: { announcements: Announcement[] })
                 ))}
               </div>
             )}
-            <p style={{ color: "#555", lineHeight: 1.8, margin: 0, fontSize: 15 }}>{a.message}</p>
+            <p style={{ color: "var(--c-body)", lineHeight: 1.8, margin: 0, fontSize: 15 }}>{a.message}</p>
           </div>
         ))
       }
@@ -829,26 +828,26 @@ function ContactPage({ responsables, contact }: { responsables: Responsable[]; c
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 1.5rem" }}>
       <div style={{ marginBottom: 40 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "#1a1a1a" }}>Contact & Aide</h1>
-        <p style={{ color: "#666" }}>Retrouvez toutes les informations pour nous contacter</p>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", margin: "0 0 8px", color: "var(--c-text)" }}>Contact & Aide</h1>
+        <p style={{ color: "var(--c-muted)" }}>Retrouvez toutes les informations pour nous contacter</p>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, marginBottom: 40 }}>
         {contactCards.map(c => (
-          <div key={c.title} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 14, padding: 24, textAlign: "center" }}>
+          <div key={c.title} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 14, padding: 24, textAlign: "center" }}>
             <p style={{ fontSize: 28, margin: "0 0 12px" }}>{c.icon}</p>
-            <p style={{ fontWeight: 600, color: "#888", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, margin: "0 0 6px" }}>{c.title}</p>
+            <p style={{ fontWeight: 600, color: "var(--c-muted-2)", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, margin: "0 0 6px" }}>{c.title}</p>
             {c.href ? (
-              <a className="contact-card-link" href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined} style={{ display: "block", fontWeight: 700, color: "#128047", fontSize: 16, margin: "0 0 4px", textDecoration: "none", wordBreak: "break-word" }}>{c.val || "—"}</a>
+              <a className="contact-card-link" href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined} style={{ display: "block", fontWeight: 700, color: "var(--c-green-link)", fontSize: 16, margin: "0 0 4px", textDecoration: "none", wordBreak: "break-word" }}>{c.val || "—"}</a>
             ) : (
-              <p style={{ fontWeight: 700, color: "#1a1a1a", fontSize: 16, margin: "0 0 4px" }}>{c.val || "—"}</p>
+              <p style={{ fontWeight: 700, color: "var(--c-text)", fontSize: 16, margin: "0 0 4px" }}>{c.val || "—"}</p>
             )}
-            <p style={{ color: "#888", fontSize: 13, margin: 0 }}>{c.sub}</p>
+            <p style={{ color: "var(--c-muted-2)", fontSize: 13, margin: 0 }}>{c.sub}</p>
           </div>
         ))}
       </div>
       {nationaux.length > 0 && (
         <>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, margin: "0 0 20px", color: "#1a1a1a" }}>Bureau national</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, margin: "0 0 20px", color: "var(--c-text)" }}>Bureau national</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16, marginBottom: 40 }}>
             {nationaux.map(l => <ResponsableCard key={l.id} r={l} />)}
           </div>
@@ -856,10 +855,10 @@ function ContactPage({ responsables, contact }: { responsables: Responsable[]; c
       )}
       {parVille.length > 0 && (
         <>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, margin: "0 0 20px", color: "#1a1a1a" }}>Représentants par ville</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, margin: "0 0 20px", color: "var(--c-text)" }}>Représentants par ville</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {parVille.map(({ city, resp }) => (
-              <div key={city} style={{ background: "#fff", border: "1px solid #eee", borderRadius: 12, overflow: "hidden" }}>
+              <div key={city} style={{ background: "var(--c-surface)", border: "1px solid var(--c-border)", borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ background: CITY_COLORS[city] || "#888", padding: "10px 18px" }}>
                   <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>{city}</span>
                 </div>
@@ -878,15 +877,15 @@ function ContactPage({ responsables, contact }: { responsables: Responsable[]; c
  
 function ResponsableCard({ r }: { r: Responsable }) {
   return (
-    <div style={{ background: "#f8f9fa", border: "1px solid #eee", borderRadius: 10, padding: 16, display: "flex", gap: 12, alignItems: "flex-start" }}>
-      <div style={{ width: 42, height: 42, borderRadius: "50%", background: "#f0fdf4", border: "2px solid #18A558", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 15, color: FLAG_COLORS.green, flexShrink: 0 }}>
+    <div style={{ background: "var(--c-surface-2)", border: "1px solid var(--c-border)", borderRadius: 10, padding: 16, display: "flex", gap: 12, alignItems: "flex-start" }}>
+      <div style={{ width: 42, height: 42, borderRadius: "50%", background: "var(--c-green-soft)", border: "2px solid #18A558", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 15, color: FLAG_COLORS.green, flexShrink: 0 }}>
         {r.name.split(" ").map(w => w[0]).slice(0, 2).join("")}
       </div>
       <div style={{ minWidth: 0 }}>
-        <p style={{ fontWeight: 600, margin: "0 0 2px", fontSize: 14, color: "#1a1a1a", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</p>
+        <p style={{ fontWeight: 600, margin: "0 0 2px", fontSize: 14, color: "var(--c-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</p>
         <p style={{ color: FLAG_COLORS.green, fontSize: 12, fontWeight: 600, margin: "0 0 3px" }}>{r.role}</p>
-        {r.phone && <p style={{ color: "#888", fontSize: 12, margin: "0 0 2px" }}>📞 {r.phone}</p>}
-        <p style={{ color: "#3b82f6", fontSize: 12, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.email}</p>
+        {r.phone && <p style={{ color: "var(--c-muted-2)", fontSize: 12, margin: "0 0 2px" }}>📞 {r.phone}</p>}
+              <p style={{ color: "var(--c-link)", fontSize: 12, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.email}</p>
       </div>
     </div>
   );
@@ -1140,6 +1139,27 @@ function AdminLogin({ onLogin, onBack, theme, onToggleTheme }: { onLogin: () => 
         .cebm-login__logo-plate { display: flex; padding: 7px 10px; border: 1px solid rgba(255,255,255,.14); border-radius: 12px; background: rgba(255,255,255,.1); }
         .cebm-login__aside-footer p { margin: 0; font-size: 12px; line-height: 1.45; color: rgba(255,255,255,.62); }
         .cebm-login__aside-footer strong { display: block; margin-bottom: 1px; font-size: 13px; color: #fff; }
+        :root[data-theme="dark"] .cebm-login {
+          --ink: #e8edf2;
+          --muted: #9aa7b4;
+          --line: #2b3743;
+          background: var(--c-bg);
+        }
+        :root[data-theme="dark"] .cebm-login__brand:hover { background: var(--c-surface-3); }
+        :root[data-theme="dark"] .cebm-login__alert { border-color: var(--c-error-border); background: var(--c-error-soft); color: var(--c-danger-text); }
+        :root[data-theme="dark"] .cebm-login__field label { color: var(--c-body); }
+        :root[data-theme="dark"] .cebm-login__link { color: var(--c-green-link); }
+        :root[data-theme="dark"] .cebm-login__control > svg { color: var(--c-muted-2); }
+        :root[data-theme="dark"] .cebm-login__control input { background: var(--c-surface-2); border-color: var(--c-border); color: var(--c-text); }
+        :root[data-theme="dark"] .cebm-login__control input::placeholder { color: var(--c-faint); }
+        :root[data-theme="dark"] .cebm-login__control input:hover { border-color: var(--c-border-strong); }
+        :root[data-theme="dark"] .cebm-login__control input:focus { background: var(--c-surface); }
+        :root[data-theme="dark"] .cebm-login__control input:-webkit-autofill { -webkit-box-shadow: 0 0 0 40px var(--c-surface) inset; -webkit-text-fill-color: var(--c-text); }
+        :root[data-theme="dark"] .cebm-login__eye { color: var(--c-muted-2); }
+        :root[data-theme="dark"] .cebm-login__eye:hover { background: var(--c-surface-3); color: var(--c-text); }
+        :root[data-theme="dark"] .cebm-login__secure { color: var(--c-faint); }
+        :root[data-theme="dark"] .cebm-login__secure svg { color: var(--c-muted-2); }
+        :root[data-theme="dark"] .cebm-login__back button:hover { background: var(--c-surface-3); color: var(--c-text); }
         @media (max-width: 900px) {
           .cebm-login { grid-template-columns: minmax(0, 1fr); }
           .cebm-login__aside { display: none; }
@@ -1345,11 +1365,11 @@ function AdminContact({ contact, setContact }: { contact: ContactInfo; setContac
       </div>
 
       {saved && (
-        <div className="adm-note" style={{ borderColor: "#bbf7d0", background: "#f0fdf4" }}>
-          <span className="adm-note-icon" style={{ background: "#dcfce7", color: "#166534" }}><AdmIcon name="shield" size={16} /></span>
-          <div>
-            <strong style={{ color: "#166534" }}>Modifications enregistrées</strong>
-            <p style={{ color: "#15803d" }}>Les coordonnées de la page Contact sont à jour.</p>
+            <div className="adm-note" style={{ borderColor: "var(--c-green-border)", background: "var(--c-green-soft)" }}>
+              <span className="adm-note-icon" style={{ background: "var(--c-green-soft-2)", color: "var(--c-green-text)" }}><AdmIcon name="shield" size={16} /></span>
+              <div>
+                <strong style={{ color: "var(--c-green-text)" }}>Modifications enregistrées</strong>
+                <p style={{ color: "var(--c-green-text-2)" }}>Les coordonnées de la page Contact sont à jour.</p>
           </div>
         </div>
       )}
@@ -1481,7 +1501,7 @@ function AdminDashboard({ events, announcements, gallery, responsables, contact,
             <p className="adm-topbar-sub">{sectionMeta[section].subtitle}</p>
           </div>
           <div className="adm-topbar-actions">
-              <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             <span className="adm-date"><AdmIcon name="calendar" size={14} /> {today}</span>
             <button className="adm-btn-site" onClick={onViewSite}><AdmIcon name="external" size={14} /> <span>Voir le site</span></button>
             <button className="adm-iconbtn adm-iconbtn--logout" onClick={onLogout} title="Déconnexion" aria-label="Déconnexion"><AdmIcon name="logout" size={16} /></button>
@@ -2089,6 +2109,61 @@ function AdminDashboard({ events, announcements, gallery, responsables, contact,
         .adm-city-card strong { display: block; font-size: 13px; color: var(--adm-ink); }
         .adm-city-card span { display: block; margin-top: 2px; font-size: 11.5px; color: var(--adm-muted); }
 
+        :root[data-theme="dark"] .adm {
+          --adm-bg: #0e141b;
+          --adm-card: #1a232e;
+          --adm-ink: #e8edf2;
+          --adm-muted: #9aa7b4;
+          --adm-line: #2b3743;
+          --adm-green-dark: #4ade80;
+        }
+        :root[data-theme="dark"] .adm-topbar { background: rgba(14,20,27,.9); }
+        :root[data-theme="dark"] .adm-date,
+        :root[data-theme="dark"] .adm-btn-site { background: var(--adm-card); }
+        :root[data-theme="dark"] .adm-btn-site:hover { background: var(--c-surface-3); border-color: var(--c-border-strong); }
+        :root[data-theme="dark"] .adm-quick button:hover { border-color: #245c3a; background: #12291d; }
+        :root[data-theme="dark"] .adm-quick-plus { background: #123326; color: #4ade80; }
+        :root[data-theme="dark"] .adm-panel-link:hover { background: #123326; }
+        :root[data-theme="dark"] .adm-empty { color: var(--adm-muted); }
+        :root[data-theme="dark"] .adm-event-row,
+        :root[data-theme="dark"] .adm-resp-row { border-bottom-color: var(--c-border); }
+        :root[data-theme="dark"] .adm-event-date { border-color: var(--adm-line); background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-resp-avatar { border-color: #245c3a; background: #123326; color: #4ade80; }
+        :root[data-theme="dark"] .adm-pill--green { border-color: var(--c-green-border); background: var(--c-green-soft); color: var(--c-green-text); }
+        :root[data-theme="dark"] .adm-pill--gray { background: var(--c-neutral-badge-bg); color: var(--c-neutral-badge-text); }
+        :root[data-theme="dark"] .adm-breakdown-label { color: var(--c-body); }
+        :root[data-theme="dark"] .adm-breakdown-track { background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-btn--ghost { background: var(--adm-card); }
+        :root[data-theme="dark"] .adm-btn--ghost:hover { background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-field label { color: var(--c-body); }
+        :root[data-theme="dark"] .adm-field input,
+        :root[data-theme="dark"] .adm-field select,
+        :root[data-theme="dark"] .adm-field textarea { background: var(--c-surface-2); color: var(--adm-ink); }
+        :root[data-theme="dark"] .adm-field input:focus,
+        :root[data-theme="dark"] .adm-field select:focus,
+        :root[data-theme="dark"] .adm-field textarea:focus { background: var(--c-surface); }
+        :root[data-theme="dark"] .adm-check { background: var(--c-surface-2); color: var(--c-body); }
+        :root[data-theme="dark"] .adm-check.is-checked { border-color: #245c3a; background: var(--c-green-soft); color: var(--c-green-text); }
+        :root[data-theme="dark"] .adm-table th { background: var(--c-surface-2); color: var(--c-muted-2); }
+        :root[data-theme="dark"] .adm-table td { border-bottom-color: var(--c-border); color: var(--c-body); }
+        :root[data-theme="dark"] .adm-table tbody tr:hover { background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-row-thumb--empty { background: var(--c-surface-3); color: var(--c-muted-2); }
+        :root[data-theme="dark"] .adm-iconbtn { background: var(--adm-card); color: var(--c-muted); }
+        :root[data-theme="dark"] .adm-iconbtn:hover { background: var(--c-surface-3); color: var(--c-text); }
+        :root[data-theme="dark"] .adm-iconbtn--danger { border-color: #7f1d1d; color: #f87171; }
+        :root[data-theme="dark"] .adm-iconbtn--danger:hover { background: var(--c-error-soft); border-color: #b91c1c; color: #fca5a5; }
+        :root[data-theme="dark"] .adm-mono { color: var(--c-body); }
+        :root[data-theme="dark"] .adm-contact { color: var(--c-link); }
+        :root[data-theme="dark"] .adm-ann-cover { background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-ann-cover--empty { color: var(--c-muted-2); background: linear-gradient(135deg, #123326, #141c25); }
+        :root[data-theme="dark"] .adm-ann-text { color: var(--c-body); }
+        :root[data-theme="dark"] .adm-note { border-color: var(--c-yellow-border); background: var(--c-yellow-soft); }
+        :root[data-theme="dark"] .adm-note-icon { background: #4a3a12; color: #fcd34d; }
+        :root[data-theme="dark"] .adm-note strong,
+        :root[data-theme="dark"] .adm-note p { color: var(--c-yellow-text); }
+        :root[data-theme="dark"] .adm-chip { background: var(--adm-card); color: var(--c-body); }
+        :root[data-theme="dark"] .adm-chip:hover { border-color: var(--c-border-strong); background: var(--c-surface-3); }
+        :root[data-theme="dark"] .adm-city-card { background: var(--c-surface-2); }
         @media (max-width: 1050px) {
           .adm-grid-2 { grid-template-columns: minmax(0, 1fr); }
         }
