@@ -248,6 +248,19 @@ function AdmIcon({ name, size = 18 }: { name: AdmIconName; size?: number }) {
   );
 }
  
+function PublicLayout({ children }: { children: ReactNode }) {
+  return (
+    <div style={{ position: "relative", minHeight: "100%", background: "var(--c-bg)" }}>
+      {/* Logo CEBM fixé en arrière-plan de toutes les pages publiques */}
+      <div aria-hidden="true" className="cebm-public-logo" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "url('/cebm-logo.jpg')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} />
+      {/* Voile clair/sombre + halos aux couleurs du logo pour la lisibilité */}
+      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none", background: "var(--c-public-veil)" }} />
+      <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
+    </div>
+  );
+}
+
+
 function NavBar({ page, setPage, theme, onToggleTheme }: { page: Page; setPage: (page: Page) => void; theme: Theme; onToggleTheme: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navLinks: Array<{ id: Page; label: string }> = [
@@ -2142,10 +2155,16 @@ export default function App() {
     return <HomePage events={events} announcements={announcements} setPage={setPage} setSelectedEvent={setSelectedEvent} />;
   };
  
+  const isPublicPage = page !== "admin" && page !== "admin-login";
+
   return (
-    <div style={{ height: "100vh", width: "100vw", background: "#f8f9fa", overflow: "auto" }}>
-      {page !== "admin" && page !== "admin-login" && <NavBar page={page} setPage={setPage} theme={theme} onToggleTheme={toggleTheme} />}
-      {renderPage()}
+    <div style={{ height: "100vh", width: "100vw", background: "var(--c-bg)", overflow: "auto" }}>
+      {isPublicPage ? (
+        <PublicLayout>
+          <NavBar page={page} setPage={setPage} theme={theme} onToggleTheme={toggleTheme} />
+          {renderPage()}
+        </PublicLayout>
+      ) : renderPage()}
     </div>
   );
 }
