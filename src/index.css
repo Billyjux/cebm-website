@@ -109,3 +109,275 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* ============================================================
+   Thème CEBM — variables centralisées (clair / nuit)
+   ============================================================ */
+:root {
+  color-scheme: light;
+  scrollbar-color: #c7d2cb #eef2ef;
+  scrollbar-width: thin;
+
+  --c-bg: #f8f9fa;
+  --c-surface: #ffffff;
+  --c-surface-2: #f8f9fa;
+  --c-surface-3: #f3f4f6;
+  --c-surface-4: #fafafa;
+  --c-text: #1a1a1a;
+  --c-heading: #1a1a1a;
+  --c-body: #555555;
+  --c-body-2: #444444;
+  --c-muted: #666666;
+  --c-muted-2: #888888;
+  --c-faint: #aaaaaa;
+  --c-faint-2: #999999;
+  --c-border: #eeeeee;
+  --c-border-strong: #dddddd;
+  --c-border-dashed: #cccccc;
+  --c-on-brand: #ffffff;
+  --c-strong: #333333;
+  --c-on-strong: #ffffff;
+  --c-link: #3b82f6;
+  --c-green-link: #128047;
+
+  --c-nav-bg: rgba(255, 255, 255, 0.90);
+  --c-nav-menu-bg: rgba(255, 255, 255, 0.97);
+  --c-nav-border: rgba(206, 17, 38, 0.16);
+  --c-nav-shadow: 0 2px 20px rgba(20, 32, 46, 0.06);
+  --c-nav-link: #2b3440;
+  --c-nav-hover: rgba(206, 17, 38, 0.06);
+  --c-nav-active-soft: rgba(206, 17, 38, 0.07);
+  --c-nav-menu-border: rgba(20, 32, 46, 0.08);
+
+  --c-hero-heading: #14202e;
+  --c-hero-sub: #4b5563;
+  --c-btn-ghost-bg: rgba(255, 255, 255, 0.9);
+  --c-btn-ghost-text: #14202e;
+  --c-btn-ghost-border: rgba(20, 32, 46, 0.2);
+  --c-chip-strong: #1a1a1a;
+  --c-on-chip-strong: #ffffff;
+  --c-border-subtle: #e5e7eb;
+
+  --c-public-veil: radial-gradient(ellipse at 20% 20%, rgba(206, 17, 38, 0.06) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(24, 165, 88, 0.06) 0%, transparent 55%), rgba(248, 249, 250, 0.84);
+  --c-hero-bg: #ffffff;
+  --c-hero-veil: radial-gradient(ellipse at 25% 45%, rgba(206, 17, 38, 0.10) 0%, transparent 55%), radial-gradient(ellipse at 75% 55%, rgba(24, 165, 88, 0.10) 0%, transparent 55%), linear-gradient(180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.88) 45%, rgba(255, 255, 255, 0.88) 60%, rgba(255, 255, 255, 0.80) 100%);
+  --c-section-glass: rgba(255, 255, 255, 0.55);
+  --c-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  --c-success-bg: #d1fae5;
+  --c-success-text: #065f46;
+  --c-warning-bg: #fef3c7;
+  --c-warning-text: #92400e;
+  --c-danger-bg: #fee2e2;
+  --c-danger-text: #991b1b;
+  --c-error-text: #ef4444;
+  --c-neutral-badge-bg: #f3f4f6;
+  --c-neutral-badge-text: #374151;
+
+  --c-green-soft: #f0fdf4;
+  --c-green-soft-2: #dcfce7;
+  --c-green-border: #bbf7d0;
+  --c-green-text: #166534;
+  --c-green-text-2: #15803d;
+  --c-yellow-soft: #fffbeb;
+  --c-yellow-border: #fde68a;
+  --c-yellow-text: #92400e;
+  --c-error-soft: #fff5f5;
+  --c-error-border: #fecaca;
+  --c-info-soft: #f0f9ff;
+  --c-info-border: #bae6fd;
+  --c-info-text: #075985;
+  --c-info-heading: #0c4a6e;
+  --c-danger-strong: #7f1d1d;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  scrollbar-color: #3a4754 #0e141b;
+
+  --c-bg: #0e141b;
+  --c-surface: #1a232e;
+  --c-surface-2: #141c25;
+  --c-surface-3: #222c38;
+  --c-surface-4: #1e2732;
+  --c-text: #e8edf2;
+  --c-heading: #f1f5f9;
+  --c-body: #c3ccd6;
+  --c-body-2: #b7c2ce;
+  --c-muted: #9aa7b4;
+  --c-muted-2: #8b98a5;
+  --c-faint: #6f7c89;
+  --c-faint-2: #8b98a5;
+  --c-border: #2b3743;
+  --c-border-strong: #3a4754;
+  --c-border-dashed: #3a4754;
+  --c-on-brand: #ffffff;
+  --c-strong: #e8edf2;
+  --c-on-strong: #0e141b;
+  --c-link: #60a5fa;
+  --c-green-link: #4ade80;
+
+  --c-nav-bg: rgba(14, 20, 27, 0.92);
+  --c-nav-menu-bg: rgba(14, 20, 27, 0.98);
+  --c-nav-border: rgba(206, 17, 38, 0.35);
+  --c-nav-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  --c-nav-link: #c3ccd6;
+  --c-nav-hover: rgba(206, 17, 38, 0.16);
+  --c-nav-active-soft: rgba(206, 17, 38, 0.16);
+  --c-nav-menu-border: #2b3743;
+
+  --c-hero-heading: #f1f5f9;
+  --c-hero-sub: #c3ccd6;
+  --c-btn-ghost-bg: rgba(255, 255, 255, 0.08);
+  --c-btn-ghost-text: #e8edf2;
+  --c-btn-ghost-border: rgba(255, 255, 255, 0.22);
+  --c-chip-strong: #e8edf2;
+  --c-on-chip-strong: #0e141b;
+  --c-border-subtle: #34414e;
+
+  --c-public-veil: radial-gradient(ellipse at 20% 20%, rgba(206, 17, 38, 0.10) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(24, 165, 88, 0.08) 0%, transparent 55%), rgba(8, 12, 16, 0.84);
+  --c-hero-bg: #101821;
+  --c-hero-veil: radial-gradient(ellipse at 25% 45%, rgba(206, 17, 38, 0.16) 0%, transparent 55%), radial-gradient(ellipse at 75% 55%, rgba(24, 165, 88, 0.12) 0%, transparent 55%), linear-gradient(180deg, rgba(9, 14, 20, 0.80) 0%, rgba(9, 14, 20, 0.90) 45%, rgba(9, 14, 20, 0.90) 60%, rgba(9, 14, 20, 0.80) 100%);
+  --c-section-glass: rgba(20, 28, 38, 0.55);
+  --c-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.45);
+
+  --c-success-bg: #123326;
+  --c-success-text: #7ee2a8;
+  --c-warning-bg: #3a2c10;
+  --c-warning-text: #fcd34d;
+  --c-danger-bg: #3a1a1f;
+  --c-danger-text: #fca5a5;
+  --c-error-text: #f87171;
+  --c-neutral-badge-bg: #2b3743;
+  --c-neutral-badge-text: #cbd5e1;
+
+  --c-green-soft: #12291d;
+  --c-green-soft-2: #123326;
+  --c-green-border: #245c3a;
+  --c-green-text: #7ee2a8;
+  --c-green-text-2: #86efac;
+  --c-yellow-soft: #33280f;
+  --c-yellow-border: #6b5220;
+  --c-yellow-text: #fcd34d;
+  --c-error-soft: #3a1a1f;
+  --c-error-border: #7f1d1d;
+  --c-info-soft: #102a3d;
+  --c-info-border: #1e4a6b;
+  --c-info-text: #7dd3fc;
+  --c-info-heading: #bae6fd;
+  --c-danger-strong: #fca5a5;
+}
+
+:root[data-theme] {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+html,
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+::selection {
+  background: rgba(206, 17, 38, 0.18);
+  color: inherit;
+}
+
+:root[data-theme="dark"] ::selection {
+  background: rgba(206, 17, 38, 0.45);
+  color: #fff;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: var(--c-faint);
+}
+
+:root[data-theme="dark"] input:-webkit-autofill,
+:root[data-theme="dark"] textarea:-webkit-autofill,
+:root[data-theme="dark"] select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--c-surface) inset !important;
+  -webkit-text-fill-color: var(--c-text) !important;
+  caret-color: var(--c-text);
+}
+
+/* Logo public fixe : reste discret, sans rectangle blanc en mode nuit */
+.cebm-public-logo {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .cebm-public-logo {
+  opacity: 0.45;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: screen;
+}
+
+/* Logos JPG affichés en <img> : petite plaque blanche arrondie en mode nuit */
+:root[data-theme="dark"] img[alt="CEBM Logo"] {
+  background: #ffffff;
+  padding: 3px 6px;
+  border-radius: 8px;
+}
+
+/* Hero : le logo blanc disparaît en mode nuit grâce à invert + screen */
+:root[data-theme="dark"] .cebm-hero-logo {
+  opacity: 0.5;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: screen;
+}
+
+/* Bouton global soleil / lune */
+.cebm-theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-surface);
+  color: var(--c-body);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.cebm-theme-toggle:hover {
+  color: #ce1126;
+  border-color: rgba(206, 17, 38, 0.35);
+  background: var(--c-surface-2);
+  transform: translateY(-1px);
+}
+
+.cebm-theme-toggle:focus-visible {
+  outline: 3px solid rgba(24, 165, 88, 0.25);
+  outline-offset: 2px;
+}
+
+.cebm-theme-toggle.is-on-dark {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.cebm-theme-toggle.is-on-dark:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+/* Champ générique (recherche bourse) */
+.cebm-input {
+  background: var(--c-surface);
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border-strong);
+}
+
+.cebm-input::placeholder {
+  color: #757575;
+}
+
+.cebm-input:focus {
+  outline: none;
+  border-color: #18a558;
+  box-shadow: 0 0 0 3px rgba(24, 165, 88, 0.15);
+}

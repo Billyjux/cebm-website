@@ -11,6 +11,7 @@ type Scholarship = { id: number; matricule: string; name: string; status: Schola
 type ContactInfo = { email: string; emailNote: string; whatsapp: string; whatsappNote: string; whatsappLink: string; phone: string; phoneNote: string; };
 type Responsable = { id: number; name: string; role: string; city: City; email: string; phone: string; isNational: boolean; };
 type Page = "home" | "events" | "event-detail" | "scholarships" | "gallery" | "announcements" | "contact" | "admin-login" | "admin";
+type Theme = "light" | "dark";
 type CityFilter = City | "Toutes";
 type ScholarshipTab = "statut" | "code";
 type AdminSection = "overview" | "events" | "announcements" | "gallery" | "responsables" | "contact";
@@ -198,6 +199,26 @@ function CebmLogo({ height = 40 }) {
   );
 }
 
+function ThemeToggle({ theme, onToggle, onDark = false }: { theme: Theme; onToggle: () => void; onDark?: boolean }) {
+  const dark = theme === "dark";
+  return (
+    <button
+      type="button"
+      className={`cebm-theme-toggle${onDark ? " is-on-dark" : ""}`}
+      onClick={onToggle}
+      aria-label={dark ? "Passer en mode clair" : "Passer en mode nuit"}
+      aria-pressed={dark}
+      title={dark ? "Mode clair" : "Mode nuit"}
+    >
+      {dark ? (
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+      ) : (
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z" /></svg>
+      )}
+    </button>
+  );
+}
+
 type AdmIconName = "grid" | "calendar" | "megaphone" | "cap" | "users" | "logout" | "external" | "plus" | "edit" | "trash" | "pin" | "clock" | "close" | "bell" | "shield" | "image" | "mail";
 
 function AdmIcon({ name, size = 18 }: { name: AdmIconName; size?: number }) {
@@ -227,7 +248,7 @@ function AdmIcon({ name, size = 18 }: { name: AdmIconName; size?: number }) {
   );
 }
  
-function NavBar({ page, setPage }: { page: Page; setPage: (page: Page) => void }) {
+function NavBar({ page, setPage, theme, onToggleTheme }: { page: Page; setPage: (page: Page) => void; theme: Theme; onToggleTheme: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navLinks: Array<{ id: Page; label: string }> = [
     { id: "home", label: "Accueil" },
@@ -248,9 +269,12 @@ function NavBar({ page, setPage }: { page: Page; setPage: (page: Page) => void }
             <button key={l.id} onClick={() => setPage(l.id)} style={{ background: page === l.id ? "#CE1126" : "none", color: page === l.id ? "#fff" : "#333", border: "none", padding: "7px 14px", borderRadius: 6, cursor: "pointer", fontSize: 14, fontWeight: page === l.id ? 600 : 400, transition: "all 0.2s" }}>{l.label}</button>
           ))}
         </div>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "none" }}>
-          <div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333" }} />
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "none" }}>
+            <div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333", marginBottom: 5 }} /><div style={{ width: 22, height: 2, background: "#333" }} />
+          </button>
+        </div>
       </div>
       {menuOpen && (
         <div style={{ background: "#fff", padding: "1rem 1.5rem", borderTop: "1px solid #eee", display: "flex", flexDirection: "column", gap: 4 }}>
@@ -844,7 +868,7 @@ function ResponsableCard({ r }: { r: Responsable }) {
   );
 }
  
-function AdminLogin({ onLogin, onBack }: { onLogin: () => void; onBack?: () => void }) {
+function AdminLogin({ onLogin, onBack, theme, onToggleTheme }: { onLogin: () => void; onBack?: () => void; theme: Theme; onToggleTheme: () => void }) {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const [err, setErr] = useState("");
@@ -859,6 +883,9 @@ function AdminLogin({ onLogin, onBack }: { onLogin: () => void; onBack?: () => v
   return (
     <div className="cebm-login">
       <div className="cebm-login__pane">
+        <div className="cebm-login__theme">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        </div>
         <button type="button" className="cebm-login__brand" onClick={() => onBack?.()} aria-label="Retour à l'accueil CEBM">
           <CebmLogo height={40} />
           <span className="cebm-login__brand-text">
@@ -966,7 +993,8 @@ function AdminLogin({ onLogin, onBack }: { onLogin: () => void; onBack?: () => v
           line-height: 1.5;
         }
         .cebm-login *, .cebm-login *::before, .cebm-login *::after { box-sizing: border-box; }
-        .cebm-login__pane { display: flex; flex-direction: column; min-width: 0; padding: 26px clamp(22px, 5vw, 64px) 24px; }
+        .cebm-login__pane { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 26px clamp(22px, 5vw, 64px) 24px; }
+        .cebm-login__theme { position: absolute; top: 22px; right: clamp(22px, 5vw, 64px); z-index: 3; }
         .cebm-login__brand {
           display: inline-flex; align-items: center; gap: 12px; align-self: flex-start;
           margin: -6px; padding: 6px; border: 0; border-radius: 10px;
@@ -1323,7 +1351,7 @@ function AdminContact({ contact, setContact }: { contact: ContactInfo; setContac
   );
 }
 
-function AdminDashboard({ events, announcements, gallery, responsables, contact, setEvents, setAnnouncements, setGallery, setResponsables, setContact, onLogout, onViewSite }: { events: EventItem[]; announcements: Announcement[]; gallery: GalleryItem[]; responsables: Responsable[]; contact: ContactInfo; setEvents: (events: EventItem[]) => void; setAnnouncements: (announcements: Announcement[]) => void; setGallery: (gallery: GalleryItem[]) => void; setResponsables: (responsables: Responsable[]) => void; setContact: (contact: ContactInfo) => void; onLogout: () => void; onViewSite: () => void; }) {
+function AdminDashboard({ events, announcements, gallery, responsables, contact, setEvents, setAnnouncements, setGallery, setResponsables, setContact, onLogout, onViewSite, theme, onToggleTheme }: { events: EventItem[]; announcements: Announcement[]; gallery: GalleryItem[]; responsables: Responsable[]; contact: ContactInfo; setEvents: (events: EventItem[]) => void; setAnnouncements: (announcements: Announcement[]) => void; setGallery: (gallery: GalleryItem[]) => void; setResponsables: (responsables: Responsable[]) => void; setContact: (contact: ContactInfo) => void; onLogout: () => void; onViewSite: () => void; theme: Theme; onToggleTheme: () => void; }) {
   const [section, setSection] = useState<AdminSection>("overview");
   const [editItem, setEditItem] = useState<GalleryItem | Announcement | EventItem | Responsable | null>(null);
   const [form, setForm] = useState<AdminForm>({});
@@ -1422,6 +1450,7 @@ function AdminDashboard({ events, announcements, gallery, responsables, contact,
             <p className="adm-topbar-sub">{sectionMeta[section].subtitle}</p>
           </div>
           <div className="adm-topbar-actions">
+              <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             <span className="adm-date"><AdmIcon name="calendar" size={14} /> {today}</span>
             <button className="adm-btn-site" onClick={onViewSite}><AdmIcon name="external" size={14} /> <span>Voir le site</span></button>
             <button className="adm-iconbtn adm-iconbtn--logout" onClick={onLogout} title="Déconnexion" aria-label="Déconnexion"><AdmIcon name="logout" size={16} /></button>
@@ -2074,6 +2103,13 @@ export default function App() {
   const [responsables, setResponsables] = useLocalStorage<Responsable[]>("cebm_responsables", INITIAL_RESPONSABLES);
   const [contact, setContact] = useLocalStorage<ContactInfo>("cebm_contact", INITIAL_CONTACT);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
+  const [theme, setTheme] = useLocalStorage<Theme>("cebm_theme", "light");
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const goToPublic = () => {
     history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -2099,16 +2135,16 @@ export default function App() {
     if (page === "gallery") return <GalleryPage gallery={gallery} />;
     if (page === "announcements") return <AnnouncementsPage announcements={announcements} />;
     if (page === "contact") return <ContactPage responsables={responsables} contact={contact} />;
-    if (page === "admin-login") return adminLoggedIn ? null : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
+    if (page === "admin-login") return adminLoggedIn ? null : <AdminLogin theme={theme} onToggleTheme={toggleTheme} onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
     if (page === "admin") return adminLoggedIn
-      ? <AdminDashboard events={events} announcements={announcements} gallery={gallery} responsables={responsables} contact={contact} setEvents={setEvents} setAnnouncements={setAnnouncements} setGallery={setGallery} setResponsables={setResponsables} setContact={setContact} onLogout={() => { setAdminLoggedIn(false); goToPublic(); }} onViewSite={goToPublic} />
-      : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
+      ? <AdminDashboard theme={theme} onToggleTheme={toggleTheme} events={events} announcements={announcements} gallery={gallery} responsables={responsables} contact={contact} setEvents={setEvents} setAnnouncements={setAnnouncements} setGallery={setGallery} setResponsables={setResponsables} setContact={setContact} onLogout={() => { setAdminLoggedIn(false); goToPublic(); }} onViewSite={goToPublic} />
+      : <AdminLogin theme={theme} onToggleTheme={toggleTheme} onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
     return <HomePage events={events} announcements={announcements} setPage={setPage} setSelectedEvent={setSelectedEvent} />;
   };
  
   return (
     <div style={{ height: "100vh", width: "100vw", background: "#f8f9fa", overflow: "auto" }}>
-      {page !== "admin" && page !== "admin-login" && <NavBar page={page} setPage={setPage} />}
+      {page !== "admin" && page !== "admin-login" && <NavBar page={page} setPage={setPage} theme={theme} onToggleTheme={toggleTheme} />}
       {renderPage()}
     </div>
   );

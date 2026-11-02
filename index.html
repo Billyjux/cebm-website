@@ -6,6 +6,18 @@
     <link rel="apple-touch-icon" href="/cebm-logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>cebm</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("cebm_theme");
+          var theme = stored ? JSON.parse(stored) : "light";
+          if (theme !== "light" && theme !== "dark") theme = "light";
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
