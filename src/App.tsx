@@ -310,24 +310,21 @@ function HomePage({ events, announcements, setPage, setSelectedEvent }: { events
   const upcomingEvents = events.filter((e: EventItem) => new Date(e.date) >= new Date()).slice(0, 6);
   return (
     <div>
-      <div style={{ background: "linear-gradient(135deg, #0f1723 0%, #1a2840 50%, #0f1723 100%)", padding: "80px 1.5rem 100px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "radial-gradient(ellipse at 30% 50%, rgba(206,17,38,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(24,165,88,0.15) 0%, transparent 60%)" }} />
-        <div style={{ position: "relative", maxWidth: 800, margin: "0 auto" }}>
-          {/* LOGO remplace les trois traits dans le hero */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 28 }}>
-            <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 16, padding: "12px 24px", backdropFilter: "blur(8px)" }}>
-              <CebmLogo height={72} />
-            </div>
-          </div>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", marginBottom: 16, lineHeight: 1.2 }}>
+      <div style={{ background: "var(--c-hero-bg)", padding: "80px 1.5rem 100px", textAlign: "center", position: "relative", overflow: "hidden", borderBottom: "1px solid var(--c-border)" }}>
+        {/* Logo CEBM en arrière-plan de toute la section Hero */}
+        <div aria-hidden="true" className="cebm-hero-logo" style={{ position: "absolute", inset: 0, backgroundImage: "url('/cebm-logo.jpg')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", zIndex: 0 }} />
+        {/* Voile clair/sombre semi-transparent pour garder le texte parfaitement lisible */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "var(--c-hero-veil)", zIndex: 1 }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: 800, margin: "0 auto" }}>
+          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "var(--c-hero-heading)", marginBottom: 16, lineHeight: 1.2 }}>
             Communauté des Étudiants<br /><span style={{ color: FLAG_COLORS.red }}>Burundais</span> au <span style={{ color: FLAG_COLORS.green }}>Maroc</span>
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 18, lineHeight: 1.7, marginBottom: 36, maxWidth: 600, margin: "0 auto 36px" }}>
+          <p style={{ color: "var(--c-hero-sub)", fontSize: 18, lineHeight: 1.7, marginBottom: 36, maxWidth: 600, margin: "0 auto 36px" }}>
             Votre plateforme communautaire pour rester informé des événements, de la galerie et des actualités de la diaspora étudiante burundaise au Maroc.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={() => setPage("events")} style={{ background: FLAG_COLORS.red, color: "#fff", border: "none", padding: "13px 28px", borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: "pointer" }}>Voir les événements</button>
-            <button onClick={() => setPage("gallery")} style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.4)", padding: "13px 28px", borderRadius: 8, fontSize: 16, cursor: "pointer" }}>Voir la galerie</button>
+            <button onClick={() => setPage("gallery")} style={{ background: "var(--c-btn-ghost-bg)", color: "var(--c-btn-ghost-text)", border: "2px solid var(--c-btn-ghost-border)", padding: "13px 28px", borderRadius: 8, fontSize: 16, cursor: "pointer" }}>Voir la galerie</button>
           </div>
         </div>
       </div>
