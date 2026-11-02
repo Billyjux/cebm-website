@@ -2075,6 +2075,11 @@ export default function App() {
   const [contact, setContact] = useLocalStorage<ContactInfo>("cebm_contact", INITIAL_CONTACT);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
+  const goToPublic = () => {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+    setPage("home");
+  };
+
   useEffect(() => {
     const openAdminFromHash = () => {
       if (window.location.hash.replace("#", "").toLowerCase() !== "admin") return;
@@ -2094,10 +2099,10 @@ export default function App() {
     if (page === "gallery") return <GalleryPage gallery={gallery} />;
     if (page === "announcements") return <AnnouncementsPage announcements={announcements} />;
     if (page === "contact") return <ContactPage responsables={responsables} contact={contact} />;
-    if (page === "admin-login") return adminLoggedIn ? null : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={() => setPage("home")} />;
+    if (page === "admin-login") return adminLoggedIn ? null : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
     if (page === "admin") return adminLoggedIn
-      ? <AdminDashboard events={events} announcements={announcements} gallery={gallery} responsables={responsables} contact={contact} setEvents={setEvents} setAnnouncements={setAnnouncements} setGallery={setGallery} setResponsables={setResponsables} setContact={setContact} onLogout={() => { setAdminLoggedIn(false); setPage("home"); }} onViewSite={() => setPage("home")} />
-      : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={() => setPage("home")} />;
+      ? <AdminDashboard events={events} announcements={announcements} gallery={gallery} responsables={responsables} contact={contact} setEvents={setEvents} setAnnouncements={setAnnouncements} setGallery={setGallery} setResponsables={setResponsables} setContact={setContact} onLogout={() => { setAdminLoggedIn(false); goToPublic(); }} onViewSite={goToPublic} />
+      : <AdminLogin onLogin={() => { setAdminLoggedIn(true); setPage("admin"); }} onBack={goToPublic} />;
     return <HomePage events={events} announcements={announcements} setPage={setPage} setSelectedEvent={setSelectedEvent} />;
   };
  
